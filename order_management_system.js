@@ -10,13 +10,39 @@ const inventory = [
 
 // TASK 2: Create an Orders Array of Order Objects
 
-let orders = [
-    {customerName: null}, // nulls for empty values
-    {items: [
-        {name: null},
-        {quantity: null}
-    ]},
-    {status: "Pending"} // default value pending, when completed it will get changed
-];
+let orders = [];
+// orders.push({
+//    customerName: "Jane Doe",
+//    items: [
+//        {name: "Mocha", quantity 2},
+//    ],
+//    status: "Pending"
+// });
 
-// console.log(orders); // feel free to test any commented console.logs :)
+
+// TASK 3: Create a Function to Place an Order
+
+function placeOrder(customerName, items) {
+    //for in loop, verify if item exists or is enough stock
+    for (let quantity in items) {
+        let inventoryItem = inventory.find(inventory => inventory.name === items.name);
+        if (!inventoryItem) {
+            console.log("Error. Item does not exist.");
+            break;
+        }
+        if(items.quantity > inventoryItem.quantity) {
+            console.log("Error. Not enough item in stock.");
+            break;
+        }
+    }
+        items.quantity -= inventory.quantity;
+    //create order and push(), set status to pending
+    orders.push({
+        customerName: customerName,
+        items: [{name: items.name, quantity: items.quantity}],
+        status: "Pending"
+    });
+    console.log(`Order placed for ${customerName}.`)
+}
+
+console.log(placeOrder("John Doe", {name: "Cappuccino", quantity: 2}))
