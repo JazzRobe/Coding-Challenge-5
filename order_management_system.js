@@ -11,38 +11,38 @@ const inventory = [
 // TASK 2: Create an Orders Array of Order Objects
 
 let orders = [];
-// orders.push({
-//    customerName: "Jane Doe",
-//    items: [
-//        {name: "Mocha", quantity 2},
-//    ],
-//    status: "Pending"
-// });
-
 
 // TASK 3: Create a Function to Place an Order
 
-function placeOrder(customerName, items) {
-    //for in loop, verify if item exists or is enough stock
-    for (let quantity in items) {
-        let inventoryItem = inventory.find(inventory => inventory.name === items.name);
+function placeOrder(customerName, orderedItems) {
+    // check if item exists
+    for (let item of orderedItems) {
+        let inventoryItem = inventory.find(inventoryItem => inventoryItem.name === item.name);
+        
         if (!inventoryItem) {
-            console.log("Error. Item does not exist.");
-            break;
+            console.log(`${item.name} does not exist.`);
+            return;
         }
-        if(items.quantity > inventoryItem.quantity) {
-            console.log("Error. Not enough item in stock.");
-            break;
+    // check if item has enough stock
+        if (inventoryItem.quantity < item.quantity) {
+            console.log(`Not enough in stock to sell ${item.name}.`);
+            return;
         }
     }
-        items.quantity -= inventory.quantity;
-    //create order and push(), set status to pending
+    
+    // subtract if enough stock
+    for (let item of orderedItems) {
+        let inventoryItem = inventory.find(inventoryItem => inventoryItem.name === item.name);
+        inventoryItem.quantity -= item.quantity;
+    }
+
+    //add order to array using push, default to pending
     orders.push({
         customerName: customerName,
-        items: [{name: items.name, quantity: items.quantity}],
+        items: orderedItems,
         status: "Pending"
     });
-    console.log(`Order placed for ${customerName}.`)
+    console.log(`Order placed for ${customerName}.`);
 }
 
-console.log(placeOrder("John Doe", {name: "Cappuccino", quantity: 2}))
+// console.log(placeOrder("Jane Doe", [{name: "Mocha", quantity: 1}]));
