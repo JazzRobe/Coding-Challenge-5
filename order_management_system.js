@@ -79,3 +79,21 @@ function completeOrder(customerName) {
 }
 
 // console.log(completeOrder("Jane Doe"));
+
+
+// TASK 6: Create a Function to Check Pending Orders
+
+function checkPendingOrders(orders) {
+    let pendingOrders = orders.filter((orders => orders.status === "Pending"));
+    return pendingOrders;
+}
+
+// console.log(checkPendingOrders(orders));
+
+
+// testing more orders :)
+console.log(placeOrder("Billybob", [{name: "Espresso", quantity: 1}, {name: "Latte", quantity: 3}]));
+console.log(placeOrder("Jolene", [{name: "Flat White", quantity: 1}]));
+console.log(calculateOrderTotal(orders[1]));
+console.log(checkPendingOrders(orders));
+console.log(completeOrder("Billybob"));
